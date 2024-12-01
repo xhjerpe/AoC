@@ -72,7 +72,7 @@ namespace Day21
         {
             var points = new List<(int, int, int, int)>() { sPos };
 
-            for (int step = 0; step < 26501365; step++)
+            for (int step = 0; step < 5000; step++)
             {
                 var len = points.Count;
                 var newPoints = new List<(int, int, int, int)>();
@@ -88,8 +88,7 @@ namespace Day21
                 }
                 points = newPoints.Distinct(new PontComp()).ToList();
 
-                points = RemovePointsInTheMiddle(points);
-
+                Console.WriteLine($"{step} {newPoints.Count}");
                 var data11 = points.Where(x => x.Item3 == -1 && x.Item4 == -1).ToArray();
                 var data12 = points.Where(x => x.Item3 == -1 && x.Item4 == 0).ToArray();
                 var data13 = points.Where(x => x.Item3 == -1 && x.Item4 == 1).ToArray();
@@ -99,11 +98,13 @@ namespace Day21
                 var data31 = points.Where(x => x.Item3 == 1 && x.Item4 == -1).ToArray();
                 var data32 = points.Where(x => x.Item3 == 1 && x.Item4 == 0).ToArray();
                 var data33 = points.Where(x => x.Item3 == 1 && x.Item4 == 1).ToArray();
-                Console.WriteLine($"{step} {newPoints.Count}");
+                Console.WriteLine($"");
                 Console.WriteLine($"{data11.Length} {data12.Length} {data13.Length}");
                 Console.WriteLine($"{data21.Length} {data22.Length} {data23.Length}");
                 Console.WriteLine($"{data31.Length} {data32.Length} {data33.Length}");
                 Console.WriteLine($"");
+
+                points = RemovePointsInTheMiddle(points);
             }
             return points.Count;
         }
@@ -115,6 +116,9 @@ namespace Day21
             var maxSouth = points.OrderBy(x => x.Item3).Last().Item3;
             var maxWest = points.OrderBy(x => x.Item4).First().Item4;
             var maxEast = points.OrderBy(x => x.Item4).Last().Item4;
+            Console.WriteLine($"     {maxNorth}");
+            Console.WriteLine($"{maxWest} {maxEast}");
+            Console.WriteLine($"     {maxSouth}");
 
             foreach (var item in points)
             {
